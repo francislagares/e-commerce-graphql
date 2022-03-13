@@ -1,5 +1,5 @@
 export const Category = {
-  products: ({ id }, args, { products }) => {
+  products: ({ id }: { id: string }, args, { products }) => {
     return products.filter(prod => prod.categoryId === id);
   },
 };
