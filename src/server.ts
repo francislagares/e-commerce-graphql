@@ -1,61 +1,20 @@
-import { ApolloServer, gql } from 'apollo-server';
-import { products } from './data/products';
+import { ApolloServer } from 'apollo-server';
+import { typeDefs } from './schema/schema';
+import { Query, Category, Product } from './resolvers';
 import { categories } from './data/categories';
-
-const typeDefs = gql`
-  type Query {
-    products: [Product!]!
-    product(id: ID!): Product
-    categories: [Category!]!
-    category(id: ID!): Category
-  }
-
-  type Product {
-    id: ID!
-    name: String!
-    description: String!
-    quantity: Int!
-    image: String!
-    price: Float!
-    onSale: Boolean!
-  }
-
-  type Category {
-    id: ID!
-    name: String!
-  }
-`;
-
-const resolvers = {
-  Query: {
-    products: () => {
-      return products;
-    },
-    product: (parent, args: { id: string }, context) => {
-      const { id } = args;
-
-      const product = products.find(prod => prod.id === id);
-
-      if (!product) return null;
-
-      return product;
-    },
-    categories: () => categories,
-    category: (parent, args: { id: string }, context) => {
-      const { id } = args;
-
-      const category = categories.find(cat => cat.id === id);
-
-      if (!category) return null;
-
-      return category;
-    },
-  },
-};
+import { products } from './data/products';
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
+  resolvers: {
+    Query,
+    Category,
+    Product,
+  },
+  context: {
+    categories,
+    products,
+  },
 });
 
 server.listen().then(({ url }) => {
