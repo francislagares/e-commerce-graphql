@@ -70,4 +70,14 @@ export const Mutation = {
 
     return true;
   },
+  updateCategory: (parent, { id, input }, { categories }) => {
+    const index = categories.findIndex(category => category.id === id);
+
+    categories[index] = {
+      ...categories[index],
+      ...input,
+    };
+
+    return categories[index];
+  },
 };
