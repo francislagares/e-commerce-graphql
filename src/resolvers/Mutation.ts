@@ -65,4 +65,9 @@ export const Mutation = {
 
     return true;
   },
+  deleteReview: (parent, { id }, { reviews }) => {
+    reviews = reviews.filter(review => review.id !== id);
+
+    return true;
+  },
 };
