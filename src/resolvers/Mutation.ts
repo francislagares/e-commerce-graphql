@@ -59,4 +59,10 @@ export const Mutation = {
 
     return true;
   },
+  deleteProduct: (parent, { id }, { products, reviews }) => {
+    products = products.filter(product => product.id !== id);
+    reviews = reviews.filter(review => review.productId !== id);
+
+    return true;
+  },
 };
