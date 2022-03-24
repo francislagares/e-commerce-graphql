@@ -80,4 +80,16 @@ export const Mutation = {
 
     return categories[index];
   },
+  updateProduct: (parent, { id, input }, { products }) => {
+    const index = products.findIndex(product => product.id === id);
+
+    if (index === -1) return null;
+
+    products[index] = {
+      ...products[index],
+      ...input,
+    };
+
+    return products[index];
+  },
 };
